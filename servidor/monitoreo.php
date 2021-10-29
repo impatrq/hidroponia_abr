@@ -69,16 +69,28 @@ $conexion=mysqli_connect("localhost","root","","prueba");
   <tbody>
     <tr>
       <th>pH Sensor <spab></th>
-      <td><p>Nivel de pH: <strong><span id="PHvalue"></span><?php echo $mostrar['nivelph']; ?></strong></p>  
+      <td><p>Nivel de pH: <strong><span id="PHvalue"><?php echo $mostrar['nivelph']; ?></strong></p></span>  
       </td>
-      <td>pH estable</td>
+      <td>
+      <?php 
+      if ($mostrar['nivelph'] < 1){
+        echo 'pH inestable';
+      }
+      else 'pH estable'
+      ?>
+      </td>
   </tbody>
   <tbody>
     <tr>
       <th>Caudalímetro</th>
-      <td><p><strong><?php echo $mostrar['caudal']; ?> L/min</strong></p>
+      <td><p><strong><?php echo $mostrar['caudal'];?> L/min</strong></p>
       </td>
-      <td>El agua circula bien</td>
+      <td><?php 
+      if ($mostrar['caudal'] < 1){
+        echo 'No está llegando suficiente agua';
+      }
+      else 'El agua está circulando bien'
+      ?></td>
   </tbody>
   <tbody>
     <tr>

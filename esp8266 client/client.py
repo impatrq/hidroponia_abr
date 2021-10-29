@@ -1,7 +1,7 @@
-import socket
 import machine
+import socket
 import network
-from machine import Pin, ADC
+from machine import Pin, ADC, Timer
 import time, sys
 from time import sleep
 import esp
@@ -10,6 +10,7 @@ import gc
 gc.collect()
 
 ip = 0
+data = ""
 
 def conectar_wifi():
 
@@ -49,17 +50,27 @@ flow.irq(handler= countPulse, trigger= flow.IRQ_FALLING)
 
 def phsensor():
     valor = sensorph.read ()
-    tension = (valor * 5/1023)
+    tension = (valor * 3.3/1023)
     print ("Tension: ", tension)
     return tension
 
 port = 8000
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s = socket.socket()
-s.connect(("192.168.2.136",port))
+s.connect(("192.168.2.111",port))
 
 print('Puerto en', ip)
 
+def timer_callback(sock):
+
+    global data
+    global s
+    global caudal 
+    print(sock)
+    s.send(data) 
+
+timer = Timer(-1)
+timer.init(period=50000, mode=Timer.PERIODIC, callback=timer_callback)
 
 while True:
     ph=phsensor()
@@ -67,16 +78,19 @@ while True:
     sleep (1)
     start_counter = 0
     caudal = (count * 60 * 2.25 / 1000)
+    print("-" * 20)
     print("El caudal es: %.3f L/min" % (caudal))
     count = 0
+
     sleep (5)
     if caudal < 1:
-        print("No esta llegando suficiente agua")
+        print("No está llegando suficiente agua")
         led1.value(1)
     else:
         led1.value(0)
     if caudal > 2:
-        print("El agua esta circulando bien")
+        print("El agua está circulando bien")
+    print("-" * 20)
     data=';'.join([str(caudal),str(ph)]).encode('utf-8')
-    s.send(data)
-    dataFromServer = s.recv(1024)
+
+

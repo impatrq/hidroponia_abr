@@ -20,25 +20,13 @@ $conexion=mysqli_connect("localhost","root","","prueba");
 </style>
             <!-------------------------JavaScript------------------------->
   <script>
-    setInterval(function()
-    {
-      getPHval();
-    }, 2000);
-    
-    function getPHval()
-    {
-      var PHvalRequest = new XMLHttpRequest();
-      PHvalRequest.onreadystatechange = function()
-      {
-        if(this.readyState == 4 && this.status == 200)
-        {
-          document.getElementsByTagName('body')[0].innerHTML = 
-          this.responseText;
-        }
-      };
-      PHvalRequest.open("GET", "readPH", true);
-      PHvalRequest.send();
-    }
+   var doSth = function () {
+
+var $md = $("#readPH");
+// Do something here
+};
+setInterval(doSth, 4000);
+
     </script>
     </head>
 
@@ -69,21 +57,21 @@ $conexion=mysqli_connect("localhost","root","","prueba");
   <tbody>
     <tr>
       <th>pH Sensor <spab></th>
-      <td><p>Nivel de pH: <strong><span id="PHvalue"><?php echo $mostrar['nivelph']; ?></strong></p></span>  
+      <td><p><strong>pH <span id="readPH"><?php echo $mostrar['nivelph']; ?></strong></p></span>  
       </td>
       <td>
       <?php 
-      if ($mostrar['nivelph'] < 1){
-        echo 'pH inestable';
+      if ([$mostrar['nivelph'] == 7]){
+        echo 'pH estable';
       }
-      else 'pH estable'
+      else 'pH inestable'
       ?>
       </td>
   </tbody>
   <tbody>
     <tr>
       <th>Caudalímetro</th>
-      <td><p><strong><?php echo $mostrar['caudal'];?> L/min</strong></p>
+      <td><p><strong><?php echo $mostrar['caudal'];?> L/min</strong></p>  
       </td>
       <td><?php 
       if ($mostrar['caudal'] < 1){
@@ -94,17 +82,51 @@ $conexion=mysqli_connect("localhost","root","","prueba");
   </tbody>
   <tbody>
     <tr>
-      <th>Bomba subir pH ↑</th>
-      <td><span>Apagado</span>
+      <th>Temperatura</th>
+      <td><p><strong><?php echo $mostrar['temperatura'];?>°</strong> en <?php echo $mostrar['lugar'];?></p>
       </td>
-      <td>pH estable</td>
+      <td><?php 
+      if ($mostrar['temperatura'] <= 26){
+        echo 'Temperatura aceptable';
+      }
+      else 'Poner botella de hielo'
+      ?></td>
+  </tbody>
+  <tbody>
+    <tr>
+      <th>Bomba subir pH ↑</th>
+      <td><span><?php 
+      if ([$mostrar['nivelph'] < 7]){
+        echo 'Apagado - pH estable';
+      }
+      else 'Bomba activada'
+      ?></span>
+      </td>
+      <td><?php 
+      if ([$mostrar['nivelph'] == 7]){
+        echo 'pH estable';
+      }
+      else 'pH inestable'
+      ?></td>
   </tbody>
   <tbody>
     <tr>
       <th>Bomba bajar pH ↓</th>
-      <td><span>Apagado</span>
+      <td><span><?php 
+      if ([$mostrar['nivelph'] > 7]){
+        echo 'Apagado - pH estable';
+      }
+      else 'Bomba activada'
+      ?></span>
       </td>
-      <td>pH estable</td>
+      <td>
+      <?php 
+      if ([$mostrar['nivelph'] == 7]){
+        echo 'pH estable';
+      }
+      else 'pH inestable'
+      ?>
+      </td>
   </tbody>
     <tr>
       <th>Nutrientes</th>

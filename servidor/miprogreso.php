@@ -37,6 +37,8 @@
 ?>
 <title>Mi progreso</title>
 <script type="text/javascript" src="layout.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 <link rel="shortcut icon" type="image/png" href="/minilogo.png"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 <style>
@@ -49,19 +51,27 @@
 
 </style>
 
+<script>
+
+if ( window.history.replaceState ) {
+  window.history.replaceState( null, null, window.location.href );
+}
+
+    </script>
+
 <nav></nav>
 <form name="form" action="" method="post" enctype="multipart/form-data">
 <section class="section">
     <div class="container">
       <p class="title">
-        Sistema de progreso de<strong> Hidroponia ABR</strong>
+        Sistema de progreso de<strong> Hidroponia ABR <ion-icon name="bar-chart-outline"></ion-icon></strong>
       </p>
       <p class="subtitle">Mediante esta función podrás guardar tus fotos semanales del progreso de tu cultivo!</p>
 
-      <p class="subtitle">Semana</p>
-    <input class="button" name="nombre" automplete="off" required value="" placeholder="Número de semana"><br><br>
+      <p class="subtitle">Semana <ion-icon name="calendar-outline"></ion-icon></p>
+    <input class="button" name="nombre" automplete="off" required value="" style="border: 2px solid #81BB34;" placeholder="Número de semana"><br><br>
 
-    <p class="subtitle">Seleccionar Imagen</p>
+    <p class="subtitle">Seleccionar Imagen <ion-icon name="image-outline"></ion-icon> </p>
     <input type="file" class="button is-link" style="background: #17A3E1" name="imagen" id="imagen"><br><br>
     <button type="sumbit" class="button is-primary" style="background: #81BB34;">Aceptar</button>
 </form><br><br>
@@ -73,9 +83,9 @@
       
 <tr>    
 
-        <td><center><p class="subtitle"><strong>Imagen del cultivo</strong></p></center></td>
-        <td><center><p class="subtitle"><strong>Semana</strong></p></center></td>
-        <td><center><p class="subtitle"><strong>Arreglar</strong></p></center></td>
+        <td><center><p class="subtitle"><strong>Imagen del cultivo <ion-icon name="image-outline"></strong></p></center></td>
+        <td><center><p class="subtitle"><strong>Semana <ion-icon name="calendar-outline"></strong></p></center></td>
+        <td><center><p class="subtitle"><strong>Arreglar <ion-icon name="build-outline"></ion-icon></strong></p></center></td>
        
 </tr>
 
@@ -100,7 +110,7 @@
             <form name="form" action="" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?php echo $rr[0]; ?>">
                 <p class="subtitle">Semana</p>
-                <input type="text" class="button" name="nombre" automplete="off" required value="<?php echo $rr['nombre']; ?>"><br><br>
+                <input type="text" class="button" name="nombre" automplete="off" style="border: 2px solid #81BB34;" required value="<?php echo $rr['nombre']; ?>"><br><br>
                 <p class="subtitle">Seleccionar Imagen</p>
                 <input type="file" class="button is-link" style="background: #17A3E1" name="imagen" id="imagen"><br><br>
                 <button type="sumbit" class="button is-primary" style="background: #81BB34;">Arreglar</button>

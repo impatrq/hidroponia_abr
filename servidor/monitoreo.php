@@ -1,6 +1,16 @@
 <?php 
 $conexion=mysqli_connect("localhost","root","","prueba");
+if(isset($_POST['mail']) && !empty($_POST['mail'])){
+
+
+	$mail = $_POST['mail'];
+	
+	$queries = "INSERT INTO `persona` (mail) VALUES ('$mail')";
+		$resultt = mysqli_query($conexion, $queries);
+		echo "<center>E-Mail cargado en el sistema con éxito. Le llegaran alertas cuando haya problemas con tu cultivo.</center>";
+	}
 ?>
+
 <!DOCTYPE html>
     <html>
     <head>
@@ -8,7 +18,10 @@ $conexion=mysqli_connect("localhost","root","","prueba");
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hidroponia ABR</title>
     <script type="text/javascript" src="layout.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <link rel="shortcut icon" type="image/png" href="/minilogo.png"/>
+    
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 <style>
   .parche {
@@ -17,6 +30,11 @@ $conexion=mysqli_connect("localhost","root","","prueba");
     position: absolute;,
     width: 100%;
 }
+  .message {
+    background-color: #81BB34;
+    border-bottom: 10px solid;
+
+  }
 </style>
             <!-------------------------JavaScript------------------------->
   <script>
@@ -27,6 +45,11 @@ var $md = $("#readPH");
 };
 setInterval(doSth, 4000);
 
+if ( window.history.replaceState ) {
+  window.history.replaceState( null, null, window.location.href );
+}
+
+
     </script>
     </head>
 
@@ -35,9 +58,16 @@ setInterval(doSth, 4000);
         <section class="section">
     <div class="container">
       <p class="title">
-        Monitoreo del sistema<strong> Hidroponia ABR</strong>
-        <br></br>
+        Monitoreo del sistema<strong> Hidroponia ABR <ion-icon name="tv-outline"></ion-icon></strong>
+        <br>
+        <form class="form-contact" method="POST">
+        <label for="inputEmail" class="sr-only">E-Mail</label>
+        <br>
+        	<input type="name" name="mail" id="inputEmail" class="button" style="border: 2px solid #81BB34;" placeholder="nombre@email.com" required>
+          <button class="button is-primary" style="background: #81BB34;" type="submit">Enviar</button>
+          </form>
       </p>
+      <br>
       </div>
       <?php
 
@@ -56,8 +86,8 @@ setInterval(doSth, 4000);
   </thead>
   <tbody>
     <tr>
-      <th>pH Sensor <spab></th>
-      <td><p><strong>pH <span id="readPH"><?php echo $mostrar['nivelph']; ?></strong></p></span>  
+      <th>pH Sensor <ion-icon name="water-outline"></ion-icon></th>
+      <td><p>pH <span id="readPH"><?php echo $mostrar['nivelph']; ?></p></span>  
       </td>
       <td>
       <?php 
@@ -70,8 +100,8 @@ setInterval(doSth, 4000);
   </tbody>
   <tbody>
     <tr>
-      <th>Caudalímetro</th>
-      <td><p><strong><?php echo $mostrar['caudal'];?> L/min</strong></p>  
+      <th>Caudalímetro <ion-icon name="speedometer-outline"></ion-icon></th>
+      <td><p><?php echo $mostrar['caudal'];?> L/min</p>  
       </td>
       <td><?php 
       if ($mostrar['caudal'] < 1){
@@ -82,8 +112,8 @@ setInterval(doSth, 4000);
   </tbody>
   <tbody>
     <tr>
-      <th>Temperatura</th>
-      <td><p><strong><?php echo $mostrar['temperatura'];?>°</strong> en <?php echo $mostrar['lugar'];?></p>
+      <th>Temperatura <ion-icon name="thermometer-outline"></ion-icon></th>
+      <td><p><?php echo $mostrar['temperatura'];?>° en <?php echo $mostrar['lugar'];?></p>
       </td>
       <td><?php 
       if ($mostrar['temperatura'] <= 26){
@@ -94,7 +124,7 @@ setInterval(doSth, 4000);
   </tbody>
   <tbody>
     <tr>
-      <th>Bomba subir pH ↑</th>
+      <th>Bomba subir pH <ion-icon name="arrow-up-outline"></ion-icon></th>
       <td><span><?php 
       if ([$mostrar['nivelph'] < 7]){
         echo 'Apagado - pH estable';
@@ -111,7 +141,7 @@ setInterval(doSth, 4000);
   </tbody>
   <tbody>
     <tr>
-      <th>Bomba bajar pH ↓</th>
+      <th>Bomba bajar pH <ion-icon name="arrow-down-outline"></ion-icon></th>
       <td><span><?php 
       if ([$mostrar['nivelph'] > 7]){
         echo 'Apagado - pH estable';
@@ -129,8 +159,8 @@ setInterval(doSth, 4000);
       </td>
   </tbody>
     <tr>
-      <th>Nutrientes</th>
-      <td><span><strong>1mL/24 Horas</span></strong>
+      <th>Nutrientes <ion-icon name="leaf-outline"></ion-icon></th>
+      <td><span>1mL/24 Horas</span>
       </td>
       <td>Nutrientes estables</td>
   </tbody>

@@ -60,11 +60,12 @@ if ( window.history.replaceState ) {
       <p class="title">
         Monitoreo del sistema<strong> Hidroponia ABR <ion-icon name="tv-outline"></ion-icon></strong>
         <br>
+        <p class="subtitle">Escribí tu E-Mail para que te lleguen alertas cuando haya problemas.</p>
         <form class="form-contact" method="POST">
         <label for="inputEmail" class="sr-only">E-Mail</label>
         <br>
         	<input type="name" name="mail" id="inputEmail" class="button" style="border: 2px solid #81BB34;" placeholder="nombre@email.com" required>
-          <button class="button is-primary" style="background: #81BB34;" type="submit">Enviar</button>
+          <button type="submit" class="button is-primary" style="background: #81BB34;">Enviar</button>
           </form>
       </p>
       <br>

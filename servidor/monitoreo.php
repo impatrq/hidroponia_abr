@@ -18,6 +18,8 @@ if(isset($_POST['mail']) && !empty($_POST['mail'])){
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hidroponia ABR</title>
     <script type="text/javascript" src="layout.js"></script>
+    <script type="text/javascript" src="ajax.js"></script>
+
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <link rel="shortcut icon" type="image/png" href="/minilogo.png"/>
@@ -37,13 +39,7 @@ if(isset($_POST['mail']) && !empty($_POST['mail'])){
   }
 </style>
             <!-------------------------JavaScript------------------------->
-  <script>
-   var doSth = function () {
-
-var $md = $("#readPH");
-// Do something here
-};
-setInterval(doSth, 4000);
+<script type="text/javascript">
 
 if ( window.history.replaceState ) {
   window.history.replaceState( null, null, window.location.href );
@@ -88,7 +84,7 @@ if ( window.history.replaceState ) {
   <tbody>
     <tr>
       <th>pH Sensor <ion-icon name="water-outline"></ion-icon></th>
-      <td><p>pH <span id="readPH"><?php echo $mostrar['nivelph']; ?></p></span>  
+      <td><p>pH <span id="phValue"><?php echo $mostrar['nivelph']; ?></span></p>  
       </td>
       <td>
       <?php 
@@ -174,6 +170,15 @@ if ( window.history.replaceState ) {
 
     <pie></pie>
 
-
+<script>
+var datosreload = new XMLHttpRequest();
+datosreload.open('GET', 'datos.php');
+// datosreload.setRequestHeader('Content-Type', 'text/plain');
+datosreload.send();
+datosreload.onload = function (data) {
+    // document.querySelector("pie").innerHTML = data.currentTarget.response;
+    console.log(datosreload.content)
+    };
+</script>
         </body>
         </html>

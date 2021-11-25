@@ -18,10 +18,12 @@ if(isset($_POST['mail']) && !empty($_POST['mail'])){
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hidroponia ABR</title>
     <script type="text/javascript" src="layout.js"></script>
-    <script type="text/javascript" src="ajax.js"></script>
+
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="ajax.js"></script>
     <link rel="shortcut icon" type="image/png" href="/minilogo.png"/>
     
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
@@ -73,6 +75,8 @@ if ( window.history.replaceState ) {
 
     while($mostrar=mysqli_fetch_array($result)){
     ?>
+    </div>
+    <div id="actualizar">
      <table class="table is-striped is-narrow is-hoverable is-fullwidth">
   <thead>
     <tr>
@@ -88,7 +92,7 @@ if ( window.history.replaceState ) {
       </td>
       <td>
       <?php 
-      if ([$mostrar['nivelph'] == 7]){
+      if ([$mostrar['nivelph'] == 3]){
         echo 'pH estable';
       }
       else 'pH inestable'
@@ -101,7 +105,7 @@ if ( window.history.replaceState ) {
       <td><p><?php echo $mostrar['caudal'];?> L/min</p>  
       </td>
       <td><?php 
-      if ($mostrar['caudal'] < 1){
+      if ([$mostrar['caudal'] < 1]){
         echo 'No está llegando suficiente agua';
       }
       else 'El agua está circulando bien'
@@ -113,7 +117,7 @@ if ( window.history.replaceState ) {
       <td><p><?php echo $mostrar['temperatura'];?>° en <?php echo $mostrar['lugar'];?></p>
       </td>
       <td><?php 
-      if ($mostrar['temperatura'] <= 26){
+      if ([$mostrar['temperatura'] <= 26]){
         echo 'Temperatura aceptable';
       }
       else 'Poner botella de hielo'
@@ -123,7 +127,7 @@ if ( window.history.replaceState ) {
     <tr>
       <th>Bomba subir pH <ion-icon name="arrow-up-outline"></ion-icon></th>
       <td><span><?php 
-      if ([$mostrar['nivelph'] < 7]){
+      if ([$mostrar['nivelph'] < 3]){
         echo 'Apagado - pH estable';
       }
       else 'Bomba activada'
@@ -140,7 +144,7 @@ if ( window.history.replaceState ) {
     <tr>
       <th>Bomba bajar pH <ion-icon name="arrow-down-outline"></ion-icon></th>
       <td><span><?php 
-      if ([$mostrar['nivelph'] > 7]){
+      if ([$mostrar['nivelph'] > 3]){
         echo 'Apagado - pH estable';
       }
       else 'Bomba activada'
@@ -148,7 +152,7 @@ if ( window.history.replaceState ) {
       </td>
       <td>
       <?php 
-      if ([$mostrar['nivelph'] == 7]){
+      if ([$mostrar['nivelph'] == 3]){
         echo 'pH estable';
       }
       else 'pH inestable'
@@ -166,19 +170,8 @@ if ( window.history.replaceState ) {
 <?php
 }
 ?>
-
+</div>
 
     <pie></pie>
-
-<script>
-var datosreload = new XMLHttpRequest();
-datosreload.open('GET', 'datos.php');
-// datosreload.setRequestHeader('Content-Type', 'text/plain');
-datosreload.send();
-datosreload.onload = function (data) {
-    // document.querySelector("pie").innerHTML = data.currentTarget.response;
-    console.log(datosreload.content)
-    };
-</script>
         </body>
         </html>

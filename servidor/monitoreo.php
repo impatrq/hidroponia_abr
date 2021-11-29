@@ -66,6 +66,7 @@ if ( window.history.replaceState ) {
       </p>
       <br>
       </div>
+<<<<<<< Updated upstream
       <?php
 
     $sql="SELECT * FROM roberto ORDER BY id DESC LIMIT 1";
@@ -163,11 +164,16 @@ if ( window.history.replaceState ) {
   </tbody>
 </table>
 </section>
+=======
+>>>>>>> Stashed changes
 <?php
-}
+include 'submonitoreo.php';
 ?>
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
     <pie></pie>
 
 <script>

@@ -34,6 +34,7 @@ soup = BeautifulSoup(page.content, 'html.parser')
 eq = soup.find_all('span', class_ ='CurrentConditions--tempValue--3a50n')
 ep = soup.find_all('h1', class_ ='CurrentConditions--location--kyTeL')
 
+
 mail = "SELECT mail FROM persona ORDER BY id DESC LIMIT 1"
 email = run_query(mail)
 email1 = str(email).replace('((', "")
@@ -50,7 +51,6 @@ s.bind(("192.168.0.214",8000))
 s.listen()
 print("El servidor funciona correctamente")
 
-#conexioncliente = s.accept()
 
 def emailcaudal():
     smtpServer='smtp.gmail.com'   
@@ -108,12 +108,54 @@ def phbajo():
         server.sendmail(fromAddr, toAddr, message)    
         print("Email de ph bajo")
 
+def tempaguaalta():
+    smtpServer='smtp.gmail.com'   
+    fromAddr='hidroponiaabr@gmail.com'         
+    toAddr=f'{email4}'
+    password='elmaestruli'     
+    #text= (f'\nEl pH de tu sistema hidropónico está bajo, es de: 0.246632').encode('utf-8')
+    SUBJECT = "TEMPERATURA ALTA - ACTUALIZACIÓN"
+    TEXT = f"La temperatura del agua es de: {tempagua}. Los coolers se han activado, se le recomienda también poner una botella de agua congelada."
+    message = 'Subject: {}\n\n{}'.format(SUBJECT, TEXT).encode('utf-8')  
+    context = ssl.create_default_context()
+    with smtplib.SMTP(smtpServer, 587) as server:
+        server = smtplib.SMTP(smtpServer, 587)
+        server.ehlo()  # Can be omitted
+        server.starttls(context=context)
+        server.ehlo()  # Can be omitted
+        server.login(fromAddr, password)
+        server.sendmail(fromAddr, toAddr, message)    
+        print("Email de temperatura alta")
+
+def tempaguabaja():
+    smtpServer='smtp.gmail.com'   
+    fromAddr='hidroponiaabr@gmail.com'         
+    toAddr=f'{email4}'
+    password='elmaestruli'     
+    #text= (f'\nEl pH de tu sistema hidropónico está bajo, es de: 0.246632').encode('utf-8')
+    SUBJECT = "TEMPERATURA BAJA - ACTUALIZACIÓN"
+    TEXT = f"La temperatura del agua es de: {tempagua}. La resistencia del agua se ha activado para calentar un poco el agua del reservorio."
+    message = 'Subject: {}\n\n{}'.format(SUBJECT, TEXT).encode('utf-8')  
+    context = ssl.create_default_context()
+    with smtplib.SMTP(smtpServer, 587) as server:
+        server = smtplib.SMTP(smtpServer, 587)
+        server.ehlo()  # Can be omitted
+        server.starttls(context=context)
+        server.ehlo()  # Can be omitted
+        server.login(fromAddr, password)
+        server.sendmail(fromAddr, toAddr, message)    
+        print("Email de temperatura alta")
+
 scheduler1 = schedule.Scheduler()
-scheduler1.every(10).seconds.do(emailcaudal)
+scheduler1.every(13).minutes.do(emailcaudal)
 scheduler2 = schedule.Scheduler()
-scheduler2.every(10).seconds.do(phbajo)
+scheduler2.every(13).minutes.do(phbajo)
 scheduler3 = schedule.Scheduler()
-scheduler3.every(10).seconds.do(phalto)
+scheduler3.every(13).minutes.do(phalto)
+scheduler4 = schedule.Scheduler()
+scheduler4.every(13).minutes.do(tempaguaalta)
+scheduler5 = schedule.Scheduler()
+scheduler5.every(13).minutes.do(tempaguabaja)
 
 while(True):
 
@@ -129,6 +171,7 @@ while(True):
         datos = databuena.split(';')
         ph = float(datos[1])
         caudal = float(datos[0])
+        tempagua = float(datos[2])
         
         tiempo = list()
         lugar = []
@@ -147,7 +190,7 @@ while(True):
 
         print(temperatura)
         
-        sql = f"INSERT INTO roberto (nivelph, caudal, temperatura, lugar) VALUES({ph}, {caudal}, '{temperatura}', '{lugares}')"
+        sql = f"INSERT INTO roberto (nivelph, caudal, temperatura, tempagua, lugar) VALUES({ph}, {caudal}, '{temperatura}', '{tempagua}' '{lugares}')"
         print(sql)
         cursor = connection.cursor()
         cursor.execute(sql)
@@ -160,3 +203,9 @@ while(True):
         
         if ph > 4:
             scheduler3.run_pending()
+        
+        if tempagua < 23:
+            scheduler5.run_pending()
+
+        if tempagua > 23:
+            scheduler4.run_pending()

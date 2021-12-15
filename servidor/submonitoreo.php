@@ -37,19 +37,31 @@ $conexion=mysqli_connect("localhost","root","","prueba");
       <td><p><?php echo $mostrar['caudal'];?> L/min</p>  
       </td>
       <td><?php 
-      if ([$mostrar['caudal'] < 1]){
-        echo 'No está llegando suficiente agua';
+      if ([$mostrar['caudal'] > 1]){
+        echo 'El agua está circulando bien';
       }
-      else 'El agua está circulando bien'
+      else 'No está llegando suficiente agua'
       ?></td>
   </tbody>
   <tbody>
     <tr>
-      <th>Temperatura <ion-icon name="thermometer-outline"></ion-icon></th>
+      <th>Temperatura del ambiente <ion-icon name="thermometer-outline"></ion-icon></th>
       <td><p><?php echo $mostrar['temperatura'];?>° en <?php echo $mostrar['lugar'];?></p>
       </td>
       <td><?php 
       if ([$mostrar['temperatura'] <= 26]){
+        echo 'Temperatura aceptable';
+      }
+      else 'Poner botella de hielo'
+      ?></td>
+  </tbody>
+  <tbody>
+    <tr>
+      <th>Temperatura del agua <ion-icon name="thermometer-outline"></ion-icon></th>
+      <td><p><?php echo $mostrar['tempagua'];?></p>
+      </td>
+      <td><?php 
+      if ([$mostrar['tempagua'] <= 26]){
         echo 'Temperatura aceptable';
       }
       else 'Poner botella de hielo'

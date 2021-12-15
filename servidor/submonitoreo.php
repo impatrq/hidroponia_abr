@@ -1,12 +1,9 @@
 <?php
 $conexion=mysqli_connect("localhost","root","","prueba");
 
-
-    $sql="SELECT * FROM roberto ORDER BY id DESC LIMIT 1";
-    $result=mysqli_query($conexion,$sql);
-
-    while($mostrar=mysqli_fetch_array($result)){
-    ?>
+    $ss=mysqli_query($conexion,"SELECT * FROM systems WHERE usuario= 'system2' ORDER BY id DESC LIMIT 1");
+    while($rr=mysqli_fetch_array($ss)){
+?>
     </div>
     <div id="actualizar">
      <table class="table is-striped is-narrow is-hoverable is-fullwidth">
@@ -20,11 +17,11 @@ $conexion=mysqli_connect("localhost","root","","prueba");
   <tbody>
     <tr>
       <th>pH Sensor <ion-icon name="water-outline"></ion-icon></th>
-      <td><p>pH <span id="phValue"><?php echo $mostrar['nivelph']; ?></span></p>  
+      <td><p>pH <span id="phValue"><?php echo $rr['nivelph']; ?></span></p>  
       </td>
       <td>
       <?php 
-      if ([$mostrar['nivelph'] == 3]){
+      if ([$rr['nivelph'] == 3]){
         echo 'pH estable';
       }
       else 'pH inestable'
@@ -34,10 +31,10 @@ $conexion=mysqli_connect("localhost","root","","prueba");
   <tbody>
     <tr>
       <th>Caudalímetro <ion-icon name="speedometer-outline"></ion-icon></th>
-      <td><p><?php echo $mostrar['caudal'];?> L/min</p>  
+      <td><p><?php echo $rr['caudal'];?> L/min</p>  
       </td>
       <td><?php 
-      if ([$mostrar['caudal'] > 1]){
+      if ([$rr['caudal'] > 1]){
         echo 'El agua está circulando bien';
       }
       else 'No está llegando suficiente agua'
@@ -46,10 +43,10 @@ $conexion=mysqli_connect("localhost","root","","prueba");
   <tbody>
     <tr>
       <th>Temperatura del ambiente <ion-icon name="thermometer-outline"></ion-icon></th>
-      <td><p><?php echo $mostrar['temperatura'];?>° en <?php echo $mostrar['lugar'];?></p>
+      <td><p><?php echo $rr['temperatura'];?>° en <?php echo $rr['lugar'];?></p>
       </td>
       <td><?php 
-      if ([$mostrar['temperatura'] <= 26]){
+      if ([$rr['temperatura'] <= 26]){
         echo 'Temperatura aceptable';
       }
       else 'Poner botella de hielo'
@@ -58,10 +55,10 @@ $conexion=mysqli_connect("localhost","root","","prueba");
   <tbody>
     <tr>
       <th>Temperatura del agua <ion-icon name="thermometer-outline"></ion-icon></th>
-      <td><p><?php echo $mostrar['tempagua'];?></p>
+      <td><p><?php echo $rr['tempagua'];?></p>
       </td>
       <td><?php 
-      if ([$mostrar['tempagua'] <= 26]){
+      if ([$rr['tempagua'] <= 26]){
         echo 'Temperatura aceptable';
       }
       else 'Poner botella de hielo'
@@ -71,14 +68,14 @@ $conexion=mysqli_connect("localhost","root","","prueba");
     <tr>
       <th>Bomba subir pH <ion-icon name="arrow-up-outline"></ion-icon></th>
       <td><span><?php 
-      if ([$mostrar['nivelph'] < 3]){
+      if ([$rr['nivelph'] < 3]){
         echo 'Apagado - pH estable';
       }
       else 'Bomba activada'
       ?></span>
       </td>
       <td><?php 
-      if ([$mostrar['nivelph'] == 7]){
+      if ([$rr['nivelph'] == 7]){
         echo 'pH estable';
       }
       else 'pH inestable'
@@ -88,7 +85,7 @@ $conexion=mysqli_connect("localhost","root","","prueba");
     <tr>
       <th>Bomba bajar pH <ion-icon name="arrow-down-outline"></ion-icon></th>
       <td><span><?php 
-      if ([$mostrar['nivelph'] > 3]){
+      if ([$rr['nivelph'] > 3]){
         echo 'Apagado - pH estable';
       }
       else 'Bomba activada'
@@ -96,7 +93,7 @@ $conexion=mysqli_connect("localhost","root","","prueba");
       </td>
       <td>
       <?php 
-      if ([$mostrar['nivelph'] == 3]){
+      if ([$rr['nivelph'] == 3]){
         echo 'pH estable';
       }
       else 'pH inestable'
@@ -110,8 +107,9 @@ $conexion=mysqli_connect("localhost","root","","prueba");
       <td>Nutrientes estables</td>
   </tbody>
 </table>
+
 </section>
+</div>
 <?php
 }
 ?>
-</div>
